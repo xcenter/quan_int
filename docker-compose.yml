@@ -1,0 +1,8 @@
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+    image: quan_int:latest
+    container_name: quan_int
+    ports:
+      - "8080:8080"
