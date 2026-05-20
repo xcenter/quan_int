@@ -37,13 +37,21 @@ class PaymentServiceTest {
     @Mock
     PaymentRepository mockPaymentRepository;
 
+    static Payment paymentProvider(BigDecimal value, CurrencyCode currencyCode, String creditorAccount, String debtorAccount, PaymentStatus status) {
+        Payment payment = Payment.newPayment(value, currencyCode, creditorAccount, debtorAccount);
+        payment.setStatus(status);
+        payment.setId("123");
+        payment.setCreatedAt(Instant.now());
+        return payment;
+    }
+
     @BeforeEach
     void setUp() {
         underTest = new PaymentService(mockPaymentRepository);
-         createdPayment   = paymentProvider(BigDecimal.TEN, CurrencyCode.EUR, CREDITOR, DEBTOR, PaymentStatus.CREATED);
-         completedPayment = paymentProvider(BigDecimal.TEN, CurrencyCode.EUR, CREDITOR, DEBTOR, PaymentStatus.COMPLETED);
-         failedPayment    = paymentProvider(BigDecimal.TEN, CurrencyCode.EUR, CREDITOR, DEBTOR, PaymentStatus.FAILED);
-         paymentRequest = new PaymentRequest(BigDecimal.ONE, CurrencyCode.USD, CREDITOR_2, DEBTOR_2);
+        createdPayment = paymentProvider(BigDecimal.TEN, CurrencyCode.EUR, CREDITOR, DEBTOR, PaymentStatus.CREATED);
+        completedPayment = paymentProvider(BigDecimal.TEN, CurrencyCode.EUR, CREDITOR, DEBTOR, PaymentStatus.COMPLETED);
+        failedPayment = paymentProvider(BigDecimal.TEN, CurrencyCode.EUR, CREDITOR, DEBTOR, PaymentStatus.FAILED);
+        paymentRequest = new PaymentRequest(BigDecimal.ONE, CurrencyCode.USD, CREDITOR_2, DEBTOR_2);
     }
 
     @Test
@@ -118,14 +126,5 @@ class PaymentServiceTest {
         when(mockPaymentRepository.save(Mockito.any(Payment.class))).thenReturn(resultingPayment);
         Payment result = underTest.failPayment(createdPayment.getId());
         Assertions.assertEquals(resultingPayment, result);
-    }
-
-
-    static Payment paymentProvider(BigDecimal value, CurrencyCode currencyCode, String creditorAccount, String debtorAccount, PaymentStatus status) {
-        Payment payment = Payment.newPayment(value, currencyCode, creditorAccount, debtorAccount);
-        payment.setStatus(status);
-        payment.setId("123");
-        payment.setCreatedAt(Instant.now());
-        return payment;
     }
 }

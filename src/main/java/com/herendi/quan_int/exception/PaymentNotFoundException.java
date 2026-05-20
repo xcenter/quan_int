@@ -1,6 +1,6 @@
 package com.herendi.quan_int.exception;
 
-public class PaymentNotFoundException  extends RuntimeException{
+public class PaymentNotFoundException extends RuntimeException {
     public PaymentNotFoundException(String id) {
         super("Payment not found: " + id);
     }
