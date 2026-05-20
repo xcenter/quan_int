@@ -8,6 +8,7 @@ The application can be tested with the following command:
 ## Building and running
 The application can be built and run with the following commands:
 > ./mvnw clean install
+> docker-compose build
 > docker-compose up
 
 ## Testing the application

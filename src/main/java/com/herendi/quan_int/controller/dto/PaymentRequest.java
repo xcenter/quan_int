@@ -8,8 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public record PaymentRequest(
-        @NotNull @DecimalMin("0.01") BigDecimal amount,
-        @NotNull CurrencyCode currency,
-        @NotBlank String creditorAccount,
-        @NotBlank String debtorAccount) {
+        @NotNull(message = "Amount cannot be null") @DecimalMin(value = "0.01", message = "Amount must be greater than 0.01") BigDecimal amount,
+        @NotNull(message = "Currency cannot be null") CurrencyCode currency,
+        @NotBlank(message = "Creditor account cannot be blank") String creditorAccount,
+        @NotBlank(message = "Debtor account cannot be blank") String debtorAccount) {
 }

@@ -27,17 +27,17 @@ public class PaymentController {
     }
 
     @GetMapping("/payments/{id}")
-    public PaymentResponse getPaymentById(@PathVariable @NotNull String id) {
+    public PaymentResponse getPaymentById(@PathVariable @NotNull(message = "Payment ID cannot be null") String id) {
         return PaymentResponse.from(paymentService.getPaymentById(id));
     }
 
     @PutMapping("/payments/{id}")
-    public PaymentResponse updatePayment(@PathVariable @NotNull String id, @RequestBody @Valid PaymentRequest paymentRequest) {
+    public PaymentResponse updatePayment(@PathVariable @NotNull(message = "Payment ID cannot be null") String id, @RequestBody @Valid PaymentRequest paymentRequest) {
         return PaymentResponse.from(paymentService.updatePayment(id, paymentRequest));
     }
 
     @DeleteMapping("/payments/{id}")
-    public void deletePayment(@PathVariable @NotNull String id) {
+    public void deletePayment(@PathVariable @NotNull(message = "Payment ID cannot be null") String id) {
         paymentService.deletePayment(id);
     }
 
@@ -47,12 +47,12 @@ public class PaymentController {
     }
 
     @PostMapping("/payments/{id}/complete")
-    public PaymentResponse completePayment(@PathVariable @NotNull String id) {
+    public PaymentResponse completePayment(@PathVariable @NotNull(message = "Payment ID cannot be null") String id) {
         return PaymentResponse.from(paymentService.completePayment(id));
     }
 
     @PostMapping("/payments/{id}/fail")
-    public PaymentResponse failPayment(@PathVariable @NotNull String id) {
+    public PaymentResponse failPayment(@PathVariable @NotNull(message = "Payment ID cannot be null") String id) {
         return PaymentResponse.from(paymentService.failPayment(id));
     }
 
